@@ -1,0 +1,38 @@
+\par
+Ensuring algorithms work accurately is crucial, especially when they drive safety critical systems like self-driving cars.
+
+\par
+We formally model a published distributed algorithm for autonomous vehicles to collaborate and pass thorough an intersection. Models are built and validated using the ``Labelled Transition System Analyser'' (LTSA). Our models reveal situations leading to deadlocks and crashes in the algorithm.
+
+\par
+We demonstrate two approaches to gain insight about a large and complex system without modeling the entire system: \textit{Modeling a sub system} - If the sub system has issues, the super system too. \textit{Modeling a fast-forwarded state} - Reveals problems that can arise later in a process.
+
+\par
+Some productivity tools developed for distributed system development are also presented. \textit{Manulator}, our distributed system simulator, enables quick prototyping and debugging on a single workstation. \textit{LTSA-O}, extension to LTSA, listens to messages exchanged in an execution of a distributed system and validates it against a model.
+
+
+
+
+%\par
+%Making sure an algorithm works free of errors is very important. It is even more important when those algorithms are driving safety critical systems such as a self-driving car.
+
+%\par
+%We formally model a published distributed algorithm for autonomous vehicles to collaborate and pass thorough an intersection. ``Labelled Transition System Analyser'' (LTSA) is used to build and validate models. Models reveal situations leading to deadlocks and crashes.
+
+%\par
+%We demonstrate two approaches to gain insight about a large and complex system without modeling the entire system: 1) Modeling a sub system - If the sub system has issues, the super system bears them too. 2) Modeling from a fast-forwarded state - Reveals problems that can arise after the modeled state given that that state is reached.
+
+%\par
+%A set of productivity tools we developed for distributed system development are also presented. Manulator, our distributed system simulator, enables quick prototyping and debugging on a single workstation. We enable LTSA tool to listen to messages exchanged in an execution of a distributed system and validate it against the model.
+ 
+
+%-----------------
+
+%\par
+%We formally model an already published distributed algorithm for autonomous vehicles to collaborate and pass thorough and intersection. ``Labelled Transition System Analyser'' (LTSA) is used to build and validate models. By a mathematical and verbal arguments, the authors of the publication claim that their algorithm is error free. However, our model reveal specific cases where the system deadlocks and vehicles crash to each other.
+
+%\par
+%Besides revealing specific problems of the algorithm, we demonstrate two approaches to gain insight about a large and complex system without modeling the complete system: 1) Modeling sub system - If the sub system has issues, then the super system too bear the same issues. 2) Modeling from a fast-forwarded state of the complex system - Reveals any problems that can arise after the modeled stated given that state is reached.
+
+%\par
+%A set of productivity tools we developed for distributed system simulation, implementation, testing and validation are also presented. Manulator, our distributed system simulator, enables quick distributed system prototyping and debugging on a single workstation. Per-node and global execution logs produced by the manulator is helpful in identifying and debugging problems of the simulation. LTSA-O, our extension of the LTSA tool can listen to the messages exchanged in an execution of an implementation or a simulation and animate the respective model in LTSA-O accordingly. LTSA-O flags, in real-time, whenever it sees an out of order message being passed in the system enabling better debugging. 

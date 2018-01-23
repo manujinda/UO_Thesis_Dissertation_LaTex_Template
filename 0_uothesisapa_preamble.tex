@@ -1,0 +1,400 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                              %  
+%       This is the beginning of a uothesisapa Dissertation                    % 
+%                                                                              %    
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\errorcontextlines 10000 % Get more logging information on errors. Following http://tex.stackexchange.com/a/83485/56363, if after setting this you see an error, "Note that the order is 'from inner to outer', that is, the first (non-indented) line is the point where the error actually occurred. The line after that (indented) is the part of that line which isn't yet processed, so the point of error is exactly at the line break."
+
+%==============================================================================%
+% Preamble
+%==============================================================================%
+%\documentclass[dissertation, copyright, final]{uothesisapa} % For final copies
+  % Add 'approved' to the list of options to add the Approval page.
+  % For a Master's thesis use 'msthesis'
+  % For a PhD dissertatoin use 'dissertation'
+
+\documentclass[dissertation, copyright, approved, final]{uothesisapa}
+%\documentclass[msthesis, copyright, approved, final]{uothesisapa} % For final copies
+  % Add 'approved' to the list of options to add the Approval page.
+
+%\documentclass[msthesis, draftcopy]{uothesisapa} % For draft copies (enables line numbering, and puts black bars where there is text that overflows a line where latex can't figure out how to break it onto another line (in "final" mode, this will result in an "overfull hbox" error, so draft mode is a good way of spotting these, following http://tex.stackexchange.com/a/39/56363)
+
+%------------------------------------------------------------------------------%
+% PACKAGES
+%------------------------------------------------------------------------------%
+% Added by Jacob L. to allow "max width" option for images (\includegraphics[max width=\textwidth]{filepath_to_image}), such that if the graphic fits on the page, it'll be normal-size, but if it's too big for the page, it will be scaled down until it fits.
+\usepackage{etex} % Loaded because when loading adjustbox below, I was getting an error, "! No room for a new \dimen ." http://tex.stackexchange.com/a/38609/56363 recommends loading etex to increase the number of packages that latex will allow itself to load.
+\usepackage[export]{adjustbox}
+
+\usepackage[main=USenglish,UKenglish]{babel} % Manujinda Changed
+\usepackage{mathtools,amsmath,amsfonts,amsthm,amssymb,bm, bbm}
+\usepackage{dcolumn,booktabs,longtable} %,subfig
+\usepackage[singlelinecheck=false]{caption} 
+  \captionsetup[subfigure]{singlelinecheck=on, labelfont=normalfont}
+  \captionsetup[figure]{labelfont=it}
+\usepackage{placeins}
+\usepackage{graphicx}
+\usepackage[space]{grffile} % Added following http://tex.stackexchange.com/a/8426/56363 to allow spaces in graphics filenames.
+\usepackage{rotating}
+\usepackage{enumitem}
+\usepackage{epstopdf}
+\usepackage{ctable}
+\usepackage{appendix}
+\usepackage{setspace}
+\usepackage{tikz}
+  \usetikzlibrary{arrows,positioning} 
+  \tikzset{>=latex}
+\usepackage[natbibapa]{apacite}
+  \bibliographystyle{apacite}
+\usepackage[normalem]{ulem} 
+\usepackage{tabularx,xspace,multirow}
+\usepackage{array}
+
+% Added by Jacob L. following https://tex.stackexchange.com/questions/148314/undefined-control-sequence-in-printbibliography-biblatex to allow UTF-8 (non-ASCII) characters in the bibliography .bib file.
+%\usepackage[utf8]{inputenc}
+
+% Added by Jacob L. to allow compatibility with pandoc's usage of \href
+\usepackage[hidelinks]{hyperref}
+
+% Added by Jacob L. to allow compatibility with R's stargazer package (which produced latex tables from regression model output)
+\usepackage{dcolumn}
+
+
+% Manujinda: To make a description list.
+\usepackage{blindtext}
+\usepackage{scrextend}
+  %\addtokomafont{labelinglabel}{\sffamily}%If you need a different font of the lables uncomment {\sffamily}
+
+%Manujinda: to make footnotes work in labeling environment
+\usepackage{footnote}
+\makesavenoteenv{labeling}
+
+
+%--- Change \align{} and \equation{} spaceing
+\usepackage{etoolbox}
+\newcommand{\zerodisplayskips}{%
+  \setlength{\abovedisplayskip}{3pt}
+  \setlength{\belowdisplayskip}{3pt}
+  \setlength{\abovedisplayshortskip}{3pt}
+  \setlength{\belowdisplayshortskip}{3pt}}
+\appto{\normalsize}{\zerodisplayskips}
+\appto{\small}{\zerodisplayskips}
+\appto{\footnotesize}{\zerodisplayskips}
+
+% Added by Manujinda Wathugala to format code listings.
+\usepackage{listings}
+  %\renewcommand\lstlistingname{Algorithm}
+  \renewcommand\lstlistlistingname{LIST OF LISTINGS}
+  %\def\lstlistingautorefname{Alg.}
+\usepackage{multirow}
+%\usepackage{csquotes}
+\graphicspath{{images/}}  % Figures are stored in this folder
+
+% Need these to create \multirow, \multicolumn tables
+\usepackage{makecell}
+\renewcommand\theadfont{\bfseries}
+
+%Manujinda
+% to user \begin{comment}
+\usepackage{verbatim}
+
+%\usepackage{array}
+%\setlength\extrarowheight{3pt} % or whatever amount is appropriate
+\usepackage{tabu}
+  \tabulinesep=3mm
+%\overfullrule=2cm
+
+\usepackage{algorithm,algorithmicx, algpseudocode}
+%\usepackage{program}
+
+% To create the list of algorithms
+\begin{comment}
+\renewcommand{\listofalgorithms}{\begingroup
+\tocfile{List of Algorithms}{loa}
+\endgroup}
+\makeatletter
+\let\l@algorithm\l@figure
+\makeatother
+\end{comment}
+
+%\renewcommand{\lstlistoflistings}{\begingroup
+%\tocfile{List of Listings}{lol}
+%\endgroup}
+%\makeatletter
+%\let\l@listing\l@figure
+%\makeatother
+
+
+% To indent blocks of code
+\algdef{SE}[SUBALG]{Indent}{EndIndent}{}{\algorithmicend\ }%
+\algtext*{Indent}
+\algtext*{EndIndent}
+
+\usepackage{varwidth}% http://ctan.org/pkg/varwidth
+
+% To create multi line indented if conditions in algorithmic environment
+\makeatletter
+\newcommand{\StatexIndent}[1][3]{%
+  \setlength\@tempdima{\algorithmicindent}%
+  \Statex\hskip\dimexpr#1\@tempdima\relax}
+\algdef{S}[IF]{IfNoThen}[1]{\algorithmicif\ #1}%
+\makeatother
+
+% To make some pages landscape
+\usepackage{pdflscape}
+
+%to make \ref{sec:correctness} convert into correcness properties
+%\newcounter{correctness}
+%\renewcommand{\thecorrectness}{correctness properties}
+
+
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{rgb}{0.8,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
+
+
+% To format LTSA listings
+%--------------------------------------
+\lstdefinelanguage{LTSA}
+{ 
+  classoffset=0,
+  morekeywords={if, then, else}, keywordstyle=\color{red},
+  classoffset=1,
+  morekeywords={when, True, False, NULL, forall, exists}, keywordstyle=\color{blue},
+  classoffset=2,
+  morekeywords={set, range, const, fluent, assert}, keywordstyle=\color{brown},
+  %classoffset=3,
+  %morekeywords={1, 2, 3, 4, 5, 6, 7, 8, 9, 0}, keywordstyle={\color{orange}},
+  classoffset=0,
+  %morekeywords={if, then, else, when, forall, set, range, const, |, ||, <<, >>, /, \{, \}},
+  sensitive=true,
+  morecomment=[l]{//},
+  morecomment=[s]{/*}{*/},
+}
+
+
+\makeatletter
+\lst@Key{countblanklines}{true}[t]%
+    {\lstKV@SetIf{#1}\lst@ifcountblanklines}
+
+\lst@AddToHook{OnEmptyLine}{%
+    \lst@ifnumberblanklines\else%
+       \lst@ifcountblanklines\else%
+         \advance\c@lstnumber-\@ne\relax%
+       \fi%
+    \fi}
+\makeatother
+
+\lstset{
+  language=LTSA,
+  showstringspaces=false,
+  numbers=left,
+  numberstyle=\tiny,
+  stepnumber=1,
+  numbersep=5pt,
+  numberblanklines=false,
+  countblanklines=false,
+  tabsize=2,
+  frameround=tfff,
+  framexleftmargin=5mm,
+  frame=shadowbox,
+  rulesepcolor=\color{gray},
+  backgroundcolor=\color{yellow!10},
+  frame=trBL,
+  %basicstyle=\scriptsize,
+  basicstyle=\ttfamily,%\selectfont uncomment this to get the same font in text
+  %upquote=true,
+  aboveskip={1.5\baselineskip},
+  columns=fixed,
+  extendedchars=true,
+  numberbychapter=false,
+  breaklines=true,
+  prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+  identifierstyle=\ttfamily,
+  %keywordstyle=\color[rgb]{0,0,1},
+  commentstyle=\color[rgb]{0.133,0.545,0.133},
+  stringstyle=\color[rgb]{0.627,0.126,0.941},
+  xleftmargin=0.9cm,
+  %xrightmargin=3.4pt,
+  linewidth=\linewidth,
+  %otherkeywords={->, ||, :, ..},
+  %emph={->, ||, :, ..}, emphstyle={\color{deepred}\bfseries},
+  otherkeywords={0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
+  emph={0, 1, 2, 3}, emphstyle={\color{red}\bfseries},
+}
+
+% To create figures using latex itself.
+% using this to create actrion trace figures from LTSA
+\usepackage{tikz}
+\usetikzlibrary{shadows.blur}
+\definecolor{LightSteelBlue}{RGB}{176, 196, 222}
+
+% To create lists without bullet points
+\usepackage{enumitem}
+
+\usepackage{lipsum}
+%--------------------------------------------
+
+% Font encoding. Enable direct use of symbols like < and >
+% Otherwise they are converted to funny charaters
+\usepackage[T1]{fontenc}
+
+% Create an empty definition for \tightlist, which Pandoc defines when *it* converts from markdown to PDF, following http://tex.stackexchange.com/a/257464/56363 (without this, you'll get an error from pdflatex, "Undefined control sequence.... \tightlist" 
+\def\tightlist{}
+
+% Number only chapter headings (level 0)
+% This adds numbuers for 4 levels down
+\setcounter{secnumdepth}{3}
+% This add numbers to toc
+\setcounter{tocdepth}{3}
+% These lines are to control indentations in the toc
+\usepackage{tocloft}
+%{}{indentation from left margin}{space between the number and the title}
+\cftsetindents{chapter}{0em}{2em}
+\cftsetindents{section}{3em}{2.5em}
+\cftsetindents{subsection}{6em}{3.5em}
+\cftsetindents{subsubsection}{9em}{4em}
+\cftsetindents{fig}{0em}{3em}
+
+
+% Make chapter leader dots non bold
+% http://mirror.hmc.edu/ctan/macros/latex/contrib/tocloft/tocloft.dtx
+% In the above page search for: "set everything in bold font"
+% I modified a command there to get the non-bold effect.
+% the article is to make the dots bold
+\renewcommand{\cftchapleader}{\normalfont\cftdotfill{\cftchapdotsep}}
+% adds leader dots from chapter titles to page numbers
+\renewcommand\cftchapdotsep{\cftdotsep}
+
+
+% Add a dot after chapter, section, subsection, subsubsection
+% figure and table numbers in ToC, ToF and ToT
+%https://tex.stackexchange.com/questions/68665/toc-chapter-problem-adding-a-dot-next-to-the-number-of-chapter
+%https://tex.stackexchange.com/questions/197977/dots-after-section-number-in-toc
+\renewcommand{\cftchapaftersnum}{.}
+\renewcommand{\cftsecaftersnum}{.}
+\renewcommand{\cftsubsecaftersnum}{.}
+\renewcommand{\cftsubsubsecaftersnum}{.}
+\renewcommand{\cftfigaftersnum}{.}
+\renewcommand{\cfttabaftersnum}{.}
+
+
+% Make chapter titles of TOC not bold
+% To make them bold again simply comment this line
+\renewcommand{\cftchapfont}{\normalfont}
+
+% Make chapter page numbers of TOC not bold
+% To make them bold again simply comment this line
+\renewcommand{\cftchappagefont}{\normalfont}
+
+% Manujinda
+% To add equations with numbers
+% also to align =, < like signs
+\usepackage{amsmath}
+
+\begin{comment}
+\def\@lstlistoflistings{%
+  \clearpage
+  \markboth{Listing}{Listing}
+  \thispagestyle{tocheadings}
+  \@startchapter{LIST OF LISTINGS}
+  \vspace*{14pt}
+  \noindent
+  \makebox[\textwidth][l]{Listing \hfill Page}
+  \protect\nopagebreak\sloppy\pagestyle{lotextraheadings}\@mydouble\@starttoc{\ext@listing}
+}
+
+\makeatletter
+\renewcommand\lstlistoflistings{%
+    \if@twocolumn
+      \@restonecoltrue\onecolumn
+    \else
+      \@restonecolfalse
+    \fi
+    \begin{center}
+      \MakeUppercase{\lstlistlistingname} \\[1.5ex]
+      \makebox[\textwidth][l]{Listing \hfill Page}
+    \end{center}
+    \vspace{-1em}
+    %\chapter*{\contentsname
+    %    \@mkboth{%
+    %       \MakeUppercase\contentsname}{\MakeUppercase\contentsname}}%
+    \@starttoc{lol}%
+    \if@restonecol\twocolumn\fi
+    }
+\makeatother
+\end{comment}
+
+\renewcommand{\refname}{References Cited}
+
+
+
+% Increase the distance between the listing number and the 
+% listing caption
+%https://tex.stackexchange.com/questions/107047/lstlistoflistings-doesnt-have-enough-room-between-numbers-and-title
+% But when this is used, the dot after the listing number vanishes
+%\makeatletter
+%\def\l@lstlisting#1#2{\@dottedtocline{1}{1.5em}{2.5em}{#1}{#2}}
+%\makeatother
+
+
+% Add a dot after the listing number of the list of listings
+% but it makes the list of listings dubble sacing
+%https://tex.stackexchange.com/questions/27645/customizing-the-list-of-listings-generated-by-lstlistoflistings
+%\makeatletter
+%\let\l@lstlisting\l@chapter
+%\makeatother
+
+
+% Add a dot after the listing number of the list of listings
+% but it makes the list of listings dubble sacing
+% https://tex.stackexchange.com/questions/27645/customizing-the-list-of-listings-generated-by-lstlistoflistings
+\makeatletter
+\begingroup\let\newcounter\@gobble\let\setcounter\@gobbletwo
+  \globaldefs\@ne \let\c@loldepth\@ne
+  \newlistof{listings}{lol}{\lstlistlistingname}
+\endgroup
+\let\l@lstlisting\l@listings
+\AtBeginDocument{\addtocontents{lol}{\protect\addvspace{10\p@}}}
+\makeatother
+\renewcommand{\cftlistingsaftersnum}{.}
+%\renewcommand{\lstlistoflistings}{\listoflistings}
+%\renewcommand{\cftlistingsfont}{\itshape}
+
+
+% Add a dot after the algorithm number in the
+% list of algorithms
+%https://tex.stackexchange.com/questions/131575/formatting-listoftables-and-listofalgorithms
+\makeatletter
+\begingroup
+  \let\newcounter\@gobble
+  \let\setcounter\@gobbletwo
+  \globaldefs\@ne
+  \let\c@loadepth\@ne
+  \newlistof{algorithms}{loa}{\listalgorithmname}
+\endgroup
+\let\l@algorithm\l@algorithms
+\makeatother
+\renewcommand{\cftalgorithmsaftersnum}{.}
+
+
+%\addtolength{\cftfignumwidth}{1em}
+%\makeatletter
+%\let\l@lstlisting\l@figure
+%\makeatother
+
+% increase a space between the listing number and the
+% listing titile
+% https://tex.stackexchange.com/questions/134739/lstlistoflistings-formatting-problem/134743#134743
+\makeatletter
+\let\l@lstlisting\l@table
+\makeatother
+
+% Change the title of the list of listings
+%\renewcommand*{\lstlistlistingname}{LIST OF LISTINGS}
+% I am trying to add subtitle Listing and Page after the
+% List of Listings title. Does not work...
+%\renewcommand*{\lstlistlistingname}{LIST OF LISTINGS \hfill \break \makebox[\textwidth][l]{Listing \hfill Page}}
